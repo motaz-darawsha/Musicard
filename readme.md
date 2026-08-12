@@ -52,6 +52,31 @@ import fs from 'node:fs';
 })();
 ```
 
+### Event card types
+
+Every theme accepts an optional `type`. Omitting it, or using `"nowPlaying"`, preserves the existing card output.
+
+| `type` | Card contents |
+|---|---|
+| `"nowPlaying"` | The existing time and progress layout. This is the default. |
+| `"start"` | Hides the progress bar and displays a concise `STARTED` indicator. |
+| `"add"` | Hides the progress bar and uses the available space for queue metadata. |
+
+```js
+const card = await Bloom({
+    type: "add",
+    trackName: "Blinding Lights",
+    artistName: "The Weeknd",
+    albumArt: "https://example.com/album-art.png",
+    fallbackArt: "https://example.com/fallback.png",
+    likes: 1200,
+    views: 54000,
+    position: 3,
+});
+```
+
+For `"add"` cards, `likes`, `views`, and `position` are optional. If no metadata is provided, the card shows a neutral `Queued for playback` message. The same `type` option is available in `Bloom`, `Calm`, `Drift`, `Ease`, `Haze`, and `Melt`.
+
 Here's how you can use `musicard` in a **Discord** bot to generate and send a music card image:
 ```js
 const { initializeFonts, Bloom } = require("musicard");
